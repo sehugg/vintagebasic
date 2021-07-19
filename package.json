@@ -4,7 +4,7 @@
   "description": "Multi-dialect vintage BASIC interpreter (from 8bitworkshop.com)",
   "main": "index.js",
   "scripts": {
-    "test": "test",
+    "test": "cd test && make",
     "build": "tsc --build tsconfig.json",
     "fuzzbasic": "jsfuzz gen/common/basic/fuzz.js ./corpus/ --versifier false"
   },

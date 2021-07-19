@@ -1,3 +1,32 @@
+# Vintage BASIC
+
+## Usage
+
+~~~
+npm run build
+node gen/basic/run.js test/presets/hello.bas 
+~~~
+
+## Example
+
+~~~basic
+OPTION DIALECT DARTMOUTH
+10 PRINT "HELLO! LET'S PROGRAM IN BASIC."
+20 INPUT "WOULD YOU MIND TYPING IN YOUR NAME";A$
+30 PRINT "THANKS, ";A$;"! THIS WILL BE FUN!"
+40 INPUT "NOW TELL ME YOUR FAVORITE NUMBER";N
+50 LET B=N^2
+60 PRINT "THAT'S A GOOD ONE! I LIKE";B;"MYSELF."
+70 PRINT "NICE MEETING YOU, ";A$;"."
+999 END
+~~~
+
+Note the OPTION DIALECT line at the beginning of the file.  This is a
+non-standard BASIC construct that tells the compiler to recognize a specific
+variant of BASIC.  This affects syntax, allowable keywords and functions,
+and print formatting.  Older dialects will limit the editor to uppercase
+characters.
+
 # BASIC Compiler Internals
 
 If you want to know more about the internals of a BASIC compiler written in TypeScript, then read on.
@@ -74,7 +103,3 @@ For INPUT commands, the runtime calls the `input()` method, which returns a Prom
 The IDE overriddes this method to show a text field to the user, and resolve the Promise when data is entered.
 The runtime might call multiple times until valid data is entered.
 
-The compiler and runtime are each about [1300 lines of TypeScript](https://github.com/sehugg/8bitworkshop/tree/master/src/common/basic),
-excluding the definitions of the BASIC dialects.
-It's tested with a [test suite](https://github.com/sehugg/nbs-ecma55-test)
-and with a [coverage-guided fuzzer](https://github.com/fuzzitdev/jsfuzz).
