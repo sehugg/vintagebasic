@@ -1,11 +1,9 @@
 
 import { BASICParser, DIALECTS, BASICOptions, CompileError } from "./compiler";
-import { BASICRuntime, InputResponse } from "./runtime";
-import { EmuHalt } from "../emu";
+import { BASICRuntime, InputResponse, RuntimeError } from "./runtime";
 
 process.on('unhandledRejection', (reason, promise) => {
-    if (!(reason instanceof EmuHalt))
-        console.log('Unhandled Rejection at:', promise, 'reason:', reason);
+    console.log('Unhandled Rejection at:', promise, 'reason:', reason);
 // Application specific logging, throwing an error, or other logic here
 });
 
@@ -37,8 +35,8 @@ export function fuzz(buf) {
             if (!runtime.step()) break;
         }
     } catch (e) {
-        if (e instanceof EmuHalt) return;
         if (e instanceof CompileError) return;
+        if (e instanceof RuntimeError) return;
         throw e;
     }
 }

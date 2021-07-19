@@ -1,7 +1,15 @@
 
 import * as basic from "./compiler";
-import { EmuHalt } from "../emu";
 import { SourceLocation } from "../workertypes";
+
+export class RuntimeError extends Error {
+  $loc : SourceLocation;
+  constructor(msg: string, loc?: SourceLocation) {
+    super(msg);
+    this.$loc = loc;
+    Object.setPrototypeOf(this, RuntimeError.prototype);
+  }
+}
 
 function isLiteral(arg: basic.Expr): arg is basic.Literal {
     return (arg as any).value != null;
@@ -196,7 +204,7 @@ export class BASICRuntime {
 
     runtimeError(msg : string) {
         this.curpc--; // we did curpc++ before executing statement
-        throw new EmuHalt(msg, this.getCurrentSourceLocation());
+        throw new RuntimeError(msg, this.getCurrentSourceLocation());
     }
     
     dialectError(what : string) {

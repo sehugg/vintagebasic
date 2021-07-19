@@ -1,7 +1,6 @@
 
 import { BASICParser, DIALECTS, BASICOptions } from "./compiler";
 import { BASICRuntime } from "./runtime";
-import { lpad, rpad } from "../util";
 
 var readline = require('readline');
 var rl = readline.createInterface({
@@ -37,8 +36,6 @@ for (var i=0; i<args.length; i++) {
         parser.opts = DIALECTS[args[++i]] || Error('no such dialect');
     else if (args[i] == '-f')
         force = true;
-    else if (args[i] == '--dialects')
-        dumpDialectInfo();
     else
         filename = args[i];
 }
@@ -101,63 +98,4 @@ runtime.resume = function() {
     });
 }
 runtime.resume();
-
-/////
-
-function dumpDialectInfo() {
-    var dialects = new Set<BASICOptions>();
-    var array = {};
-    var SELECTED_DIALECTS = ['TINY','ECMA55','DARTMOUTH','HP','DEC','ALTAIR','BASIC80','MODERN'];
-    SELECTED_DIALECTS.forEach((dkey) => {
-        dialects.add(DIALECTS[dkey]);
-    });
-    var ALL_KEYWORDS = new Set<string>();
-    var ALL_FUNCTIONS = new Set<string>();
-    var ALL_OPERATORS = new Set<string>();
-    dialects.forEach((dialect) => {
-        Object.entries(dialect).forEach(([key, value]) => {
-            if (value === null) value = "all";
-            else if (value === true) value = "Y";
-            else if (value === false) value = "-";
-            else if (Array.isArray(value))
-                value = value.length;
-            if (!array[key]) array[key] = [];
-            array[key].push(value);
-            if (dialect.validKeywords) dialect.validKeywords.map(ALL_KEYWORDS.add.bind(ALL_KEYWORDS));
-            if (dialect.validFunctions) dialect.validFunctions.map(ALL_FUNCTIONS.add.bind(ALL_FUNCTIONS));
-            if (dialect.validOperators) dialect.validOperators.map(ALL_OPERATORS.add.bind(ALL_OPERATORS));
-        });
-    });
-    dialects.forEach((dialect) => {
-        ALL_KEYWORDS.forEach((keyword) => {
-            if (parser.supportsCommand(keyword)) {
-                var has = dialect.validKeywords == null || dialect.validKeywords.indexOf(keyword) >= 0;
-                keyword = '`'+keyword+'`'
-                if (!array[keyword]) array[keyword] = [];
-                array[keyword].push(has ? "Y" : "-");
-            }
-        });
-        ALL_OPERATORS.forEach((keyword) => {
-            var has = dialect.validOperators == null || dialect.validOperators.indexOf(keyword) >= 0;
-            if (keyword == '#') keyword = '*#*';
-            keyword = "*a* " + keyword + " *b*";
-            if (!array[keyword]) array[keyword] = [];
-            array[keyword].push(has ? "Y" : "-");
-        });
-        ALL_FUNCTIONS.forEach((keyword) => {
-            if (runtime.supportsFunction(keyword)) {
-                var has = dialect.validFunctions == null || dialect.validFunctions.indexOf(keyword) >= 0;
-                keyword = '`'+keyword+'()`'
-                if (!array[keyword]) array[keyword] = [];
-                array[keyword].push(has ? "Y" : "-");
-            }
-        });
-    });
-    Object.entries(array).forEach(([key, arr]) => {
-        var s = rpad(key, 30) + "|";
-        s += (arr as []).map((val) => rpad(val, 9)).join('|');
-        console.log(s);
-    });
-    process.exit(0);
-}
 
