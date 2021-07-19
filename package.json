@@ -1,0 +1,28 @@
+{
+  "name": "vintagebasic",
+  "version": "1.0.0",
+  "description": "Multi-dialect vintage BASIC interpreter (from 8bitworkshop.com)",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sehugg/vintagebasic.git"
+  },
+  "keywords": [
+    "basic",
+    "interpreter",
+    "vintage",
+    "retro"
+  ],
+  "author": "Steven Hugg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sehugg/vintagebasic/issues"
+  },
+  "homepage": "https://github.com/sehugg/vintagebasic#readme",
+  "devDependencies": {
+    "typescript": "^4.3.5"
+  }
+}

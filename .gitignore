@@ -1,0 +1,10 @@
+*~
+node_modules
+local/
+tests_output/
+test/output/
+.DS_Store
+tmp/
+web/
+release/
+gen/
