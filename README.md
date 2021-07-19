@@ -1,8 +1,10 @@
 # Vintage BASIC
 
+[Try it online at 8bitworkshop.com](https://8bitworkshop.com/redir.html?platform=basic)
+
 ## Usage
 
-~~~
+~~~sh
 npm run build
 node gen/basic/run.js test/presets/hello.bas 
 ~~~
