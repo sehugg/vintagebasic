@@ -28,5 +28,11 @@
     "@types/node": "^16.3.3",
     "jsfuzz": "^1.0.15",
     "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@types/html-to-text": "^8.1.1",
+    "html-to-text": "^8.2.1",
+    "masto": "^4.4.1",
+    "rxjs": "^7.5.7"
   }
 }
