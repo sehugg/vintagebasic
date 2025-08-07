@@ -6,7 +6,7 @@
   "scripts": {
     "test": "cd test && make",
     "build": "tsc --build tsconfig.json",
-    "fuzzbasic": "jsfuzz gen/common/basic/fuzz.js ./corpus/ --versifier false"
+    "fuzzbasic": "jsfuzz gen/basic/fuzz.js ./corpus/ --versifier false"
   },
   "repository": {
     "type": "git",
